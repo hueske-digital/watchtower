@@ -1,0 +1,26 @@
+version: "3.5"
+
+services:
+  app:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    environment:
+      - TZ
+      - WATCHTOWER_NO_STARTUP_MESSAGE
+      - WATCHTOWER_DEBUG
+      - WATCHTOWER_NOTIFICATIONS
+      - WATCHTOWER_NOTIFICATION_EMAIL_FROM
+      - WATCHTOWER_NOTIFICATION_EMAIL_TO
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER
+      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD
+      - WATCHTOWER_CLEANUP
+      - WATCHTOWER_SCHEDULE
+      - WATCHTOWER_ROLLING_RESTART
+      - WATCHTOWER_LIFECYCLE_HOOKS=true
+    labels:
+      backups: "false"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $HOME/.docker/config.json:/config.json:ro
