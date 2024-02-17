@@ -19,8 +19,6 @@ services:
       - WATCHTOWER_SCHEDULE
       - WATCHTOWER_ROLLING_RESTART
       - WATCHTOWER_LIFECYCLE_HOOKS=true
-    labels:
-      backups: "false"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json:ro
