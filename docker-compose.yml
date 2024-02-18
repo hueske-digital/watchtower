@@ -19,6 +19,7 @@ services:
       - WATCHTOWER_SCHEDULE
       - WATCHTOWER_ROLLING_RESTART
       - WATCHTOWER_LIFECYCLE_HOOKS=true
+      - WATCHTOWER_NOTIFICATIONS_HOSTNAME
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json:ro
