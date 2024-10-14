@@ -4,6 +4,7 @@ services:
   app:
     image: containrrr/watchtower
     restart: unless-stopped
+    command: --http-api-update --http-api-periodic-polls
     environment:
       - TZ
       - WATCHTOWER_NO_STARTUP_MESSAGE
