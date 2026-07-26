@@ -5,7 +5,14 @@ services:
     environment:
       - TZ=${TZ:-Europe/Berlin}
       - WATCHTOWER_NO_STARTUP_MESSAGE=${WATCHTOWER_NO_STARTUP_MESSAGE:-true}
-      - WATCHTOWER_HTTP_API_UPDATE=${WATCHTOWER_HTTP_API_UPDATE:-}
+      # /v1/update ist aktiv, sobald ein Token gesetzt ist – damit eine CI den
+      # Deploy sofort anstoßen kann, statt auf den Zeitplan zu warten.
+      # Die Kopplung an den Token ist Absicht: Watchtower verweigert den Start,
+      # wenn ein authentifizierter Endpunkt ohne Token aktiviert wird, und würde
+      # mit restart:unless-stopped in eine Neustartschleife laufen – samt
+      # Ausfall der geplanten Updates aller anderen Container.
+      # Ein ausdrücklich gesetzter Wert (auch leer) gewinnt immer.
+      - WATCHTOWER_HTTP_API_ENDPOINTS=${WATCHTOWER_HTTP_API_ENDPOINTS-${WATCHTOWER_HTTP_API_TOKEN:+update}}
       - WATCHTOWER_HTTP_API_PERIODIC_POLLS=${WATCHTOWER_HTTP_API_PERIODIC_POLLS:-}
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:-}
       - WATCHTOWER_DEBUG=${WATCHTOWER_DEBUG:-false}
