@@ -13,7 +13,11 @@ services:
       # Ausfall der geplanten Updates aller anderen Container.
       # Ein ausdrücklich gesetzter Wert (auch leer) gewinnt immer.
       - WATCHTOWER_HTTP_API_ENDPOINTS=${WATCHTOWER_HTTP_API_ENDPOINTS-${WATCHTOWER_HTTP_API_TOKEN:+update}}
-      - WATCHTOWER_HTTP_API_PERIODIC_POLLS=${WATCHTOWER_HTTP_API_PERIODIC_POLLS:-}
+      # Default true: Watchtower schaltet den Zeitplan sonst ab, sobald die
+      # Update-API aktiv ist (Standard des Flags ist false). Die geplanten
+      # Updates aller Container fielen dann still weg. Ohne aktive API ist
+      # der Schalter wirkungslos.
+      - WATCHTOWER_HTTP_API_PERIODIC_POLLS=${WATCHTOWER_HTTP_API_PERIODIC_POLLS:-true}
       - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN:-}
       - WATCHTOWER_DEBUG=${WATCHTOWER_DEBUG:-false}
       - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATIONS:-}
